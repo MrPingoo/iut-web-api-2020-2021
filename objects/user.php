@@ -80,6 +80,44 @@ class User{
         return false;
 
     }
-    
+
+
+    // read one user
+    function read($id){
+
+        // select all query
+        $query = "SELECT
+                *
+            FROM
+                " . $this->table_name . " u
+            WHERE 
+                u.id = $id";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    // read one user
+    function list($limit = 10, $offset = 0){
+        // select all query
+        $query = "SELECT
+                *
+            FROM
+                " . $this->table_name . " u
+            LIMIT $limit OFFSET $offset";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+
+        return $stmt;
+    }
 }
 ?>
