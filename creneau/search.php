@@ -7,7 +7,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/user.php';
+include_once '../objects/creneau.php';
 include_once '../objects/student.php';
 
 // instantiate database and product object
@@ -15,29 +15,32 @@ $database = new Database();
 $db = $database->getConnection();
 
 // initialize object
-$user = new User($db);
 $student = new Student($db);
+$creneau = new Creneau($db);
 
-// read products will be here
-// query products
-$stmt = $user->read($_GET['id']);
+$data = json_decode(file_get_contents("php://input"), true);
+
+$student = $student->findById($data['student']);
+
+$stmt = $creneau->search($data['matieres'], $student['lvl'], $data['begin'], $data['end']);
+
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
 if($num>0){
 
-    $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($user[0]['id']) {
-        $stmtStudents = $student->readByParent($user[0]['id']);
-        $user[0]['students'] = $stmtStudents->fetchAll(PDO::FETCH_ASSOC);
-    }
+    // les créneaux dont la date de début et de fin est comprise entre deux dates
+    // récupérer le niveau de mon élève
+    // récupération des créneaux pour matières listées et dont le niveau de la matière est >= au niveau de mon élève
+
+    $creneaux = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // set response code - 200 OK
     http_response_code(200);
 
     // show products data in json format
-    echo json_encode($user[0]);
+    echo json_encode($creneaux);
 }else{
 
     // set response code - 404 Not found

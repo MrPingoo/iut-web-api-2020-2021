@@ -59,5 +59,23 @@ class Student{
 
     }
 
+    // read products
+    function findById($id){
+        // select all query
+        $query = "SELECT
+                *
+            FROM
+                " . $this->table_name . " s
+            WHERE 
+                s.id = '" . $id . "'";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+
+        return $stmt->fetch();
+    }
 }
 ?>
