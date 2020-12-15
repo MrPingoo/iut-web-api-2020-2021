@@ -13,6 +13,7 @@ class Creneau{
     public $end;
     public $nb;
     public $salle_id;
+    public $reservations;
 
     // constructor with $db as database connection
     public function __construct($db){
@@ -37,6 +38,29 @@ class Creneau{
 
         return $stmt;
 
+    }
+
+    function dataToObject($data){
+        $this->id = $data['id'];
+        $this->created_at = $data['created_at'];
+        $this->updated_at = $data['updated_at'];
+        $this->begin = $data['begin'];
+        $this->end = $data['end'];
+        $this->nb = $data['nb'];
+        $this->salle_id = $data['salle_id'];
+    }
+
+    // read products
+    function find($id){
+        $query = 'SELECT * from creneau WHERE id = ' . $id;
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute();
+
+        $this->dataToObject($stmt->fetch());
+
+        return $this;
     }
 
     // create product
