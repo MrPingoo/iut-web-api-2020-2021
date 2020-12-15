@@ -50,5 +50,18 @@ class Reservation{
 
         return $stmt->fetch();
     }
+
+
+    function countByReservation($id, $begin, $end) {
+        $query = 'SELECT count(creneau.id) as nb FROM creneau INNER JOIN reservation ON creneau.id=reservation.creneau_id where reservation.student_id = ' . $id . ' and creneau.begin >= "' . $begin . '" and creneau.end <= "' . $end . '"';
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute();
+
+        $data = $stmt->fetch();
+
+        return $data ['nb'];
+    }
 }
 ?>

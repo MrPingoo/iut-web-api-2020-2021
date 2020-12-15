@@ -26,14 +26,15 @@ $creneau = new Creneau($db);
 
 $creneau->find($data['creneau']);
 
-if($creneau->nb <= $reservation->countByCreneau($data['creneau'])['nb']){
-
-    // set response code - 201 created
+if($reservation->countByReservation($data['student'], $creneau->begin, $creneau->end) > 0){
     http_response_code(503);
+    echo json_encode(array("message" => "Vous êtes déjà sur une reservation."));
+    exit();
+}
 
-    // tell the user
+if($creneau->nb <= $reservation->countByCreneau($data['creneau'])['nb']){
+    http_response_code(503);
     echo json_encode(array("message" => "Créneau complet."));
-
     exit();
 }
 
