@@ -29,18 +29,9 @@ class Creneau{
         }
         $matieressql = implode(',', array_values($matieres_name));
 
-        $query = 'SELECT creneau.* from creneau INNER JOIN creneau_matiere ON creneau.id=creneau_matiere.creneau_id 
-where creneau.begin >= ":begin" 
-and creneau.end <= ":end"
-and creneau_matiere.lvl >= :lvl 
-and creneau_matiere.matiere_id IN (SELECT matiere.id FROM matiere WHERE matiere.name IN (:matieressql))';
+        $query = 'SELECT creneau.* from creneau INNER JOIN creneau_matiere ON creneau.id=creneau_matiere.creneau_id where creneau.begin >= "' . $begin . '" and creneau.end <= "' . $end . '" and creneau_matiere.lvl >= ' . $lvl . ' and creneau_matiere.matiere_id IN (SELECT matiere.id FROM matiere WHERE matiere.name IN (' . $matieressql .'))';
 
         $stmt = $this->conn->prepare($query);
-
-        $stmt->bindParam(':matieressql', $matieressql);
-        $stmt->bindParam(':begin', $begin);
-        $stmt->bindParam(':end', $end);
-        $stmt->bindParam(':lvl', $lvl);
 
         $stmt->execute();
 
