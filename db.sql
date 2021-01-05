@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 15, 2020 at 01:07 PM
+-- Generation Time: Jan 05, 2021 at 07:17 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.4.2
 
@@ -287,6 +287,17 @@ CREATE TABLE `reservation` (
   `creneau_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`id`, `student_id`, `creneau_id`) VALUES
+(1, 10, 26),
+(2, 10, 26),
+(6, 10, 26),
+(7, 11, 26),
+(8, 12, 27);
+
 -- --------------------------------------------------------
 
 --
@@ -402,6 +413,13 @@ CREATE TABLE `subscription` (
   `amount_ttc` double NOT NULL,
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `subscription`
+--
+
+INSERT INTO `subscription` (`id`, `area_id`, `reference`, `name`, `description`, `amount_ht`, `amount_ttc`, `deleted_at`) VALUES
+(1, 1, '#123', '#123', '#123', 500, 600, NULL);
 
 -- --------------------------------------------------------
 
@@ -667,7 +685,7 @@ ALTER TABLE `reglement`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -703,7 +721,7 @@ ALTER TABLE `student_subscription`
 -- AUTO_INCREMENT for table `subscription`
 --
 ALTER TABLE `subscription`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`

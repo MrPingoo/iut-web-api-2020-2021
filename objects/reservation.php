@@ -7,6 +7,10 @@ class Reservation{
 
     // object properties
     public $id;
+
+    /**
+     * @var Student
+     */
     public $student;
     public $creneau;
 
@@ -53,7 +57,7 @@ class Reservation{
 
 
     function countByReservation($id, $begin, $end) {
-        $query = 'SELECT count(creneau.id) as nb FROM creneau INNER JOIN reservation ON creneau.id=reservation.creneau_id where reservation.student_id = ' . $id . ' and creneau.begin >= "' . $begin . '" and creneau.end <= "' . $end . '"';
+        $query = 'SELECT count(creneau.id) as nb FROM ' . $this->table_name .  ' INNER JOIN reservation ON creneau.id=reservation.creneau_id where reservation.student_id = ' . $id . ' and creneau.begin >= "' . $begin . '" and creneau.end <= "' . $end . '"';
 
         $stmt = $this->conn->prepare($query);
 
