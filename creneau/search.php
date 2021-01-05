@@ -22,7 +22,17 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 $student = $student->findById($data['student']);
 
-$stmt = $creneau->search($data['matieres'], $student['lvl'], $data['begin'], $data['end']);
+$limit = 2;
+$offset = 0;
+
+if (isset($data['offset'])) {
+    $offset = $data['offset'];
+}
+if (isset($data['limit'])) {
+    $limit = $data['limit'];
+}
+
+$stmt = $creneau->search($data['matieres'], $student['lvl'], $data['begin'], $data['end'], $limit, $offset);
 
 $num = $stmt->rowCount();
 
